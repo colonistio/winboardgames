@@ -10,9 +10,12 @@ const labels = ui[lang];
 ---
 
 <aside class="sponsor" aria-label={labels.sponsorTitle}>
-  <div>
-    <strong>{labels.sponsorTitle}</strong>
-    <p>{labels.sponsorText}</p>
+  <div class="sponsor-body">
+    <img class="sponsor-logo" src="/colonist-logo.svg" alt="Colonist.io" width="48" height="48" loading="lazy" />
+    <div>
+      <span class="sponsor-title">{labels.sponsorTitle}</span>
+      <p class="sponsor-text">{labels.sponsorText}</p>
+    </div>
   </div>
   <a class="button" href={colonistUrl} rel="sponsored noopener" target="_blank">{labels.sponsorCta}</a>
 </aside>

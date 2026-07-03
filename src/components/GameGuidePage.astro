@@ -1,6 +1,6 @@
 ---
 import FooterSponsor from "./FooterSponsor.astro";
-import { categories, guideBySlug, listingBySlug, localizePath, type GameGuide } from "../data/games";
+import { guideBySlug, listingBySlug, localizePath, type GameGuide } from "../data/games";
 import { type Lang, ui } from "../data/site";
 
 type Props = {
@@ -10,12 +10,16 @@ type Props = {
 
 const { lang, guide } = Astro.props;
 const labels = ui[lang];
-const category = categories.find((item) => item.id === guide.categoryId);
 const related = guide.relatedSlugs.map((slug) => listingBySlug[slug]).filter(Boolean);
 ---
 
-<section class="hero">
-  <a class="eyebrow" href={localizePath(lang)}>{labels.home}</a>
+<section class="hero guide-hero">
+  <a class="back-link" href={localizePath(lang)}>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M15 18l-6-6 6-6" />
+    </svg>
+    {labels.home}
+  </a>
   <h1>{guide.title}</h1>
   <p>{guide.intro[lang]}</p>
 </section>
@@ -62,11 +66,7 @@ const related = guide.relatedSlugs.map((slug) => listingBySlug[slug]).filter(Boo
       </ul>
     </section>
 
-    <section class="resource-card">
-      <h3>{category?.name[lang]}</h3>
-      <p>{category?.description[lang]}</p>
-      <p>{labels.lastUpdated}: {guide.updated}</p>
-    </section>
+    <p class="updated-note">{labels.lastUpdated}: {guide.updated}</p>
   </aside>
 </main>
 
