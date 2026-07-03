@@ -641,15 +641,21 @@ export const guides: GameGuide[] = [
     resources: {
       en: [
         { label: "Practice Catan-style games on Colonist.io", url: "https://colonist.io" },
-        { label: "Catan Studio rules and variants", url: "https://www.catan.com" }
+        { label: "Catan strategy forums on BoardGameGeek", url: "https://boardgamegeek.com/boardgame/13/catan" },
+        { label: "r/Catan strategy community", url: "https://www.reddit.com/r/Catan/" },
+        { label: "Catan overview on Wikipedia", url: "https://en.wikipedia.org/wiki/Catan" }
       ],
       tr: [
         { label: "Colonist.io'da Catan tarzi pratik yap", url: "https://colonist.io" },
-        { label: "Catan Studio kurallar ve varyantlar", url: "https://www.catan.com" }
+        { label: "BoardGameGeek'te Catan strateji forumlari", url: "https://boardgamegeek.com/boardgame/13/catan" },
+        { label: "r/Catan strateji toplulugu", url: "https://www.reddit.com/r/Catan/" },
+        { label: "Wikipedia'da Catan'a genel bakis", url: "https://en.wikipedia.org/wiki/Catan" }
       ],
       de: [
         { label: "Catan-aehnlich auf Colonist.io ueben", url: "https://colonist.io" },
-        { label: "Catan Studio Regeln und Varianten", url: "https://www.catan.com" }
+        { label: "Catan-Strategieforen auf BoardGameGeek", url: "https://boardgamegeek.com/boardgame/13/catan" },
+        { label: "r/Catan Strategie-Community", url: "https://www.reddit.com/r/Catan/" },
+        { label: "Catan-Ueberblick auf Wikipedia", url: "https://en.wikipedia.org/wiki/Catan" }
       ]
     },
     relatedSlugs: ["carcassonne", "ticket-to-ride", "splendor"]
