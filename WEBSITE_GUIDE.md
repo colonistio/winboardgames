@@ -41,7 +41,31 @@ This website teaches practical strategies for winning board games. It should fee
 - Stack: Astro static site.
 - Source lives at repository root on `main`.
 - Shared game catalog: `src/data/games.ts`.
+- Game cover manifest: `src/data/gameImages.ts` (auto-generated).
 - Shared UI strings and language settings: `src/data/site.ts`.
 - Main layout and global styles: `src/layouts/BaseLayout.astro`.
 - Homepage component: `src/components/HomePage.astro`.
 - Strategy page component: `src/components/GameGuidePage.astro`.
+
+## Adding a New Game (checklist)
+
+1. Add the game to the right category array in `src/data/games.ts` (`name`, `slug`, optional `tagline`).
+2. Add a strategy guide entry (hand-written in `curatedGuides`, or let the category generator create one).
+3. Add a BoardGameGeek id for the cover image in `scripts/fetch-bgg-images.mjs` under `bggIds`.
+4. Run `npm run fetch-images` to download the cover and refresh `src/data/gameImages.ts`.
+5. Build locally with `npm run build` and confirm the homepage card shows the new cover.
+
+## Game Cover Images
+
+- Covers come from BoardGameGeek via `api.geekdo.com/api/geekitems` and are **self-hosted** in `public/games/` (do not hotlink BGG CDN URLs in production).
+- File naming: `public/games/bgg-<slug>.<ext>` (for example `bgg-pandemic.jpg`).
+- The fetch script validates that the BGG game name matches our catalog name before saving. Wrong ids are skipped so we never show the wrong box art.
+- Games without a BGG listing (or without a mapped id) keep `public/games/placeholder.svg`.
+- To find a BGG id: open the game on boardgamegeek.com and copy the number from the URL (`/boardgame/<id>/...`).
+- After adding ids, run:
+
+```bash
+npm run fetch-images
+```
+
+- The manifest `src/data/gameImages.ts` is regenerated automatically. `games.ts` reads it through `withImage()` — do not hand-edit the manifest.

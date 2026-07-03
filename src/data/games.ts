@@ -1,4 +1,12 @@
 import type { Lang } from "./site";
+import { gameImages } from "./gameImages";
+
+function withImage(game: GameListing): GameListing {
+  return {
+    ...game,
+    image: game.image ?? gameImages[game.slug]
+  };
+}
 
 export type GameListing = {
   name: string;
@@ -36,7 +44,6 @@ const classics: GameListing[] = [
     name: "Monopoly",
     slug: "monopoly",
     featured: true,
-    image: "/games/bgg-monopoly.jpg",
     tagline: {
       en: "Corner the board and bankrupt everyone",
       tr: "Tahtayi ele gecir ve herkesi iflas ettir",
@@ -47,7 +54,6 @@ const classics: GameListing[] = [
     name: "Chess",
     slug: "chess",
     featured: true,
-    image: "/games/bgg-chess.jpg",
     tagline: {
       en: "Stop blundering and start converting wins",
       tr: "Hata yapmayi birak, kazanmaya basla",
@@ -62,7 +68,6 @@ const classics: GameListing[] = [
     name: "Scrabble",
     slug: "scrabble",
     featured: true,
-    image: "/games/bgg-scrabble.jpg",
     tagline: {
       en: "Score big with tile balance and bingos",
       tr: "Tas dengesi ve bingolarla cok puan al",
@@ -99,7 +104,6 @@ const euros: GameListing[] = [
     name: "Catan",
     slug: "catan",
     featured: true,
-    image: "/games/bgg-catan.png",
     tagline: {
       en: "Pick the right spots, trade like a shark",
       tr: "Dogru koseleri sec, kurt gibi takas yap",
@@ -110,7 +114,6 @@ const euros: GameListing[] = [
     name: "Carcassonne",
     slug: "carcassonne",
     featured: true,
-    image: "/games/bgg-carcassonne.jpg",
     tagline: {
       en: "Free your meeples and out-score rivals",
       tr: "Meeple'larini kurtar, rakipleri geride birak",
@@ -336,7 +339,7 @@ export const categories: GameCategory[] = [
       tr: "Kazandiran zamansiz taktikler",
       de: "Zeitlose Taktiken zum Sieg"
     },
-    games: classics
+    games: classics.map(withImage)
   },
   {
     id: "euro-board-games",
@@ -355,7 +358,7 @@ export const categories: GameCategory[] = [
       tr: "Motor kurma ve puan avantajlari",
       de: "Engine-Building & Punktevorteile"
     },
-    games: euros
+    games: euros.map(withImage)
   },
   {
     id: "card-games",
@@ -374,7 +377,7 @@ export const categories: GameCategory[] = [
       tr: "Olasilik, blof ve kazanan hamleler",
       de: "Chancen, Bluffs & Gewinnzuege"
     },
-    games: cards
+    games: cards.map(withImage)
   },
   {
     id: "dice-games",
@@ -393,7 +396,7 @@ export const categories: GameCategory[] = [
       tr: "Risk ve olasiligi yonet",
       de: "Risiko und Wahrscheinlichkeit meistern"
     },
-    games: dice
+    games: dice.map(withImage)
   },
   {
     id: "word-games",
@@ -412,7 +415,7 @@ export const categories: GameCategory[] = [
       tr: "Kelime ve ipuclariyla one gec",
       de: "Mit Woertern & Hinweisen gewinnen"
     },
-    games: words
+    games: words.map(withImage)
   },
   {
     id: "party-family-games",
@@ -431,7 +434,7 @@ export const categories: GameCategory[] = [
       tr: "Masayi oku, one gec",
       de: "Den Tisch lesen und vorn liegen"
     },
-    games: partyFamily
+    games: partyFamily.map(withImage)
   },
   {
     id: "cooperative-games",
@@ -450,7 +453,7 @@ export const categories: GameCategory[] = [
       tr: "Oyunu takim olarak yen",
       de: "Das Spiel im Team besiegen"
     },
-    games: cooperative
+    games: cooperative.map(withImage)
   },
   {
     id: "strategy-war-games",
@@ -469,7 +472,7 @@ export const categories: GameCategory[] = [
       tr: "Manevrayla ustunluk kur",
       de: "Ueberliste und dominiere"
     },
-    games: strategyWar
+    games: strategyWar.map(withImage)
   }
 ];
 
