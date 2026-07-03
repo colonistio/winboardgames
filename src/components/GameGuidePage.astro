@@ -26,44 +26,102 @@ const related = guide.relatedSlugs.map((slug) => listingBySlug[slug]).filter(Boo
 
 <main class="guide-layout">
   <div class="guide-main">
-    <section class="guide-card">
-      <h2>{labels.quickTips}</h2>
-      <ul>
-        {guide.quickTips[lang].map((tip) => <li>{tip}</li>)}
+    <section class="panel">
+      <header class="panel-head">
+        <span class="panel-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M13 2L4.5 12.5c-.4.5 0 1.2.6 1.2H11l-1 8.3 8.5-10.5c.4-.5 0-1.2-.6-1.2H12z" />
+          </svg>
+        </span>
+        <h2>{labels.quickTips}</h2>
+      </header>
+      <ul class="tip-list">
+        {
+          guide.quickTips[lang].map((tip) => (
+            <li>
+              <svg class="tick" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M20 6L9 17l-5-5" />
+              </svg>
+              <span>{tip}</span>
+            </li>
+          ))
+        }
       </ul>
     </section>
 
-    <section class="guide-card">
-      <h2>{labels.strategy}</h2>
-      {guide.strategy[lang].map((paragraph) => <p>{paragraph}</p>)}
+    <section class="panel">
+      <header class="panel-head">
+        <span class="panel-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 3v18h18" />
+            <path d="M7 14l3-4 3 3 4-6" />
+          </svg>
+        </span>
+        <h2>{labels.strategy}</h2>
+      </header>
+      <ol class="step-list">
+        {
+          guide.strategy[lang].map((paragraph, index) => (
+            <li>
+              <span class="step-num">{index + 1}</span>
+              <p>{paragraph}</p>
+            </li>
+          ))
+        }
+      </ol>
     </section>
   </div>
 
   <aside class="guide-side">
-    <section class="resource-card">
-      <h3>{labels.resources}</h3>
-      <ul>
+    <section class="panel">
+      <header class="panel-head">
+        <span class="panel-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20" />
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z" />
+          </svg>
+        </span>
+        <h3>{labels.resources}</h3>
+      </header>
+      <ul class="link-list">
         {
           guide.resources[lang].map((resource) => (
             <li>
-              <a href={resource.url} rel="noopener" target="_blank">{resource.label}</a>
+              <a href={resource.url} rel="noopener" target="_blank">
+                <span>{resource.label}</span>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <path d="M7 17L17 7M9 7h8v8" />
+                </svg>
+              </a>
             </li>
           ))
         }
       </ul>
     </section>
 
-    <section class="resource-card">
-      <h3>{labels.related}</h3>
-      <ul>
+    <section class="panel">
+      <header class="panel-head">
+        <span class="panel-icon" aria-hidden="true">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1.5" />
+            <rect x="14" y="3" width="7" height="7" rx="1.5" />
+            <rect x="3" y="14" width="7" height="7" rx="1.5" />
+            <rect x="14" y="14" width="7" height="7" rx="1.5" />
+          </svg>
+        </span>
+        <h3>{labels.related}</h3>
+      </header>
+      <div class="chip-row">
         {
-          related.map((game) => (
-            <li>
-              {guideBySlug[game.slug] ? <a href={localizePath(lang, game.slug)}>{game.name}</a> : game.name}
-            </li>
-          ))
+          related.map((game) =>
+            guideBySlug[game.slug] ? (
+              <a class="chip" href={localizePath(lang, game.slug)}>{game.name}</a>
+            ) : (
+              <span class="chip chip-static">{game.name}</span>
+            )
+          )
         }
-      </ul>
+      </div>
     </section>
 
     <p class="updated-note">{labels.lastUpdated}: {guide.updated}</p>

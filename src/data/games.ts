@@ -4,12 +4,15 @@ export type GameListing = {
   name: string;
   slug: string;
   featured?: boolean;
+  image?: string;
+  tagline?: Record<Lang, string>;
 };
 
 export type GameCategory = {
   id: string;
   name: Record<Lang, string>;
   description: Record<Lang, string>;
+  cardSubtitle: Record<Lang, string>;
   games: GameListing[];
 };
 
@@ -29,13 +32,43 @@ export type GameGuide = {
 };
 
 const classics: GameListing[] = [
-  { name: "Monopoly", slug: "monopoly", featured: true },
-  { name: "Chess", slug: "chess", featured: true },
+  {
+    name: "Monopoly",
+    slug: "monopoly",
+    featured: true,
+    image: "/games/monopoly.svg",
+    tagline: {
+      en: "Corner the board and bankrupt everyone",
+      tr: "Tahtayi ele gecir ve herkesi iflas ettir",
+      de: "Beherrsche das Brett und ruiniere alle"
+    }
+  },
+  {
+    name: "Chess",
+    slug: "chess",
+    featured: true,
+    image: "/games/chess.svg",
+    tagline: {
+      en: "Stop blundering and start converting wins",
+      tr: "Hata yapmayi birak, kazanmaya basla",
+      de: "Keine Patzer mehr, verwandle Vorteile"
+    }
+  },
   { name: "Checkers", slug: "checkers" },
   { name: "Backgammon", slug: "backgammon" },
   { name: "Go", slug: "go" },
   { name: "Mahjong", slug: "mahjong" },
-  { name: "Scrabble", slug: "scrabble", featured: true },
+  {
+    name: "Scrabble",
+    slug: "scrabble",
+    featured: true,
+    image: "/games/scrabble.svg",
+    tagline: {
+      en: "Score big with tile balance and bingos",
+      tr: "Tas dengesi ve bingolarla cok puan al",
+      de: "Punkte satt mit Buchstabenbalance"
+    }
+  },
   { name: "Risk", slug: "risk" },
   { name: "Clue", slug: "clue" },
   { name: "Battleship", slug: "battleship" },
@@ -62,8 +95,28 @@ const classics: GameListing[] = [
 ];
 
 const euros: GameListing[] = [
-  { name: "Catan", slug: "catan", featured: true },
-  { name: "Carcassonne", slug: "carcassonne", featured: true },
+  {
+    name: "Catan",
+    slug: "catan",
+    featured: true,
+    image: "/games/catan.svg",
+    tagline: {
+      en: "Pick the right spots, trade like a shark",
+      tr: "Dogru koseleri sec, kurt gibi takas yap",
+      de: "Beste Plaetze waehlen, clever handeln"
+    }
+  },
+  {
+    name: "Carcassonne",
+    slug: "carcassonne",
+    featured: true,
+    image: "/games/carcassonne.svg",
+    tagline: {
+      en: "Free your meeples and out-score rivals",
+      tr: "Meeple'larini kurtar, rakipleri geride birak",
+      de: "Meeple befreien und Gegner ueberpunkten"
+    }
+  },
   { name: "Ticket to Ride", slug: "ticket-to-ride" },
   { name: "Agricola", slug: "agricola" },
   { name: "Puerto Rico", slug: "puerto-rico" },
@@ -278,6 +331,11 @@ export const categories: GameCategory[] = [
       tr: "Basit kuralli, kalici ve cok aranan klasik oyunlar.",
       de: "Zeitlose Spiele mit einfachen Regeln, starken Mustern und hoher Nachfrage."
     },
+    cardSubtitle: {
+      en: "Timeless tactics to win",
+      tr: "Kazandiran zamansiz taktikler",
+      de: "Zeitlose Taktiken zum Sieg"
+    },
     games: classics
   },
   {
@@ -291,6 +349,11 @@ export const categories: GameCategory[] = [
       en: "Resource, engine-building, tile-laying, and modern strategy games.",
       tr: "Kaynak, motor kurma, karo yerlestirme ve modern strateji oyunlari.",
       de: "Ressourcen-, Engine-Building-, Plattchenlege- und moderne Strategiespiele."
+    },
+    cardSubtitle: {
+      en: "Engine-building & scoring edges",
+      tr: "Motor kurma ve puan avantajlari",
+      de: "Engine-Building & Punktevorteile"
     },
     games: euros
   },
@@ -306,6 +369,11 @@ export const categories: GameCategory[] = [
       tr: "Tek kisilik kart bulmacalari, koz oyunlari, parti kartlari ve koleksiyon kart oyunlari.",
       de: "Solo-Kartenraetsel, Stichspiele, Party-Karten und Sammelkartenspiele."
     },
+    cardSubtitle: {
+      en: "Odds, bluffs & winning plays",
+      tr: "Olasilik, blof ve kazanan hamleler",
+      de: "Chancen, Bluffs & Gewinnzuege"
+    },
     games: cards
   },
   {
@@ -319,6 +387,11 @@ export const categories: GameCategory[] = [
       en: "Push-your-luck and probability games where risk timing matters.",
       tr: "Risk alma ve olasilik hesaplamasinin onemli oldugu zar oyunlari.",
       de: "Gluecksreiz- und Wahrscheinlichkeitsspiele, in denen Timing entscheidet."
+    },
+    cardSubtitle: {
+      en: "Master risk and probability",
+      tr: "Risk ve olasiligi yonet",
+      de: "Risiko und Wahrscheinlichkeit meistern"
     },
     games: dice
   },
@@ -334,6 +407,11 @@ export const categories: GameCategory[] = [
       tr: "Kelime bilgisi, ipucu verme, heceleme ve cikarim oyunlari.",
       de: "Wortschatz-, Hinweis-, Rechtschreib- und Deduktionsspiele."
     },
+    cardSubtitle: {
+      en: "Outsmart with words & clues",
+      tr: "Kelime ve ipuclariyla one gec",
+      de: "Mit Woertern & Hinweisen gewinnen"
+    },
     games: words
   },
   {
@@ -347,6 +425,11 @@ export const categories: GameCategory[] = [
       en: "Fast, social, easy-to-teach games for mixed groups.",
       tr: "Karma gruplar icin hizli, sosyal ve kolay ogretilen oyunlar.",
       de: "Schnelle, soziale und leicht erklaerbare Spiele fuer gemischte Gruppen."
+    },
+    cardSubtitle: {
+      en: "Read the table, come out ahead",
+      tr: "Masayi oku, one gec",
+      de: "Den Tisch lesen und vorn liegen"
     },
     games: partyFamily
   },
@@ -362,6 +445,11 @@ export const categories: GameCategory[] = [
       tr: "Planlama, rol disiplini ve ortak bilginin kazandirdigi takim oyunlari.",
       de: "Teamspiele, in denen Planung, Rollenfokus und geteilte Informationen gewinnen."
     },
+    cardSubtitle: {
+      en: "Beat the game as a team",
+      tr: "Oyunu takim olarak yen",
+      de: "Das Spiel im Team besiegen"
+    },
     games: cooperative
   },
   {
@@ -375,6 +463,11 @@ export const categories: GameCategory[] = [
       en: "Conflict, negotiation, area control, and abstract strategy games.",
       tr: "Catisma, pazarlik, alan kontrolu ve soyut strateji oyunlari.",
       de: "Konflikt-, Verhandlungs-, Gebietskontroll- und abstrakte Strategiespiele."
+    },
+    cardSubtitle: {
+      en: "Outmaneuver and dominate",
+      tr: "Manevrayla ustunluk kur",
+      de: "Ueberliste und dominiere"
     },
     games: strategyWar
   }

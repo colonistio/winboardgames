@@ -9,8 +9,7 @@ type Props = {
 
 const { lang } = Astro.props;
 const labels = ui[lang];
-const cardLabel = (slug: string) => (guideBySlug[slug] ? labels.readGuide : "Coming soon");
-const cardHref = (slug: string) => (guideBySlug[slug] ? localizePath(lang, slug) : undefined);
+const placeholder = "/games/placeholder.svg";
 ---
 
 <section class="hero">
@@ -31,8 +30,13 @@ const cardHref = (slug: string) => (guideBySlug[slug] ? localizePath(lang, slug)
     {
       featuredListings.map((game) => (
         <a class="game-card" href={localizePath(lang, game.slug)} data-game={`${game.name} featured`}>
-          <strong>{game.name}</strong>
-          <span>{labels.readGuide}</span>
+          <span class="card-thumb">
+            <img src={game.image ?? placeholder} alt={game.name} loading="lazy" width="400" height="260" />
+          </span>
+          <span class="card-body">
+            <strong>{game.name}</strong>
+            <span class="card-sub">{game.tagline ? game.tagline[lang] : labels.readGuide}</span>
+          </span>
         </a>
       ))
     }
@@ -48,21 +52,27 @@ const cardHref = (slug: string) => (guideBySlug[slug] ? localizePath(lang, slug)
       </div>
       <div class="game-grid">
         {category.games.map((game) => {
-          const href = cardHref(game.slug);
-          const content = (
+          const hasGuide = Boolean(guideBySlug[game.slug]);
+          const subtitle = game.tagline ? game.tagline[lang] : category.cardSubtitle[lang];
+          const inner = (
             <>
-              <strong>{game.name}</strong>
-              <span>{cardLabel(game.slug)}</span>
+              <span class="card-thumb">
+                <img src={game.image ?? placeholder} alt={game.name} loading="lazy" width="400" height="260" />
+              </span>
+              <span class="card-body">
+                <strong>{game.name}</strong>
+                <span class="card-sub">{subtitle}</span>
+              </span>
             </>
           );
 
-          return href ? (
-            <a class="game-card" href={href} data-game={`${game.name} ${category.name[lang]}`}>
-              {content}
+          return hasGuide ? (
+            <a class="game-card" href={localizePath(lang, game.slug)} data-game={`${game.name} ${category.name[lang]}`}>
+              {inner}
             </a>
           ) : (
             <article class="game-card" data-game={`${game.name} ${category.name[lang]}`}>
-              {content}
+              {inner}
             </article>
           );
         })}
@@ -83,22 +93,22 @@ const cardHref = (slug: string) => (guideBySlug[slug] ? localizePath(lang, slug)
 
   if (search instanceof HTMLInputElement) {
     search.addEventListener("input", () => {
-    const query = search.value.trim().toLowerCase();
-    let visibleCount = 0;
+      const query = search.value.trim().toLowerCase();
+      let visibleCount = 0;
 
-    cards.forEach((card) => {
-      const text = card.getAttribute("data-game")?.toLowerCase() ?? "";
-      const isVisible = !query || text.includes(query);
-      card.classList.toggle("hidden", !isVisible);
-      if (isVisible) visibleCount += 1;
+      cards.forEach((card) => {
+        const text = card.getAttribute("data-game")?.toLowerCase() ?? "";
+        const isVisible = !query || text.includes(query);
+        card.classList.toggle("hidden", !isVisible);
+        if (isVisible) visibleCount += 1;
+      });
+
+      sections.forEach((section) => {
+        const visibleCards = section.querySelectorAll("[data-game]:not(.hidden)");
+        section.classList.toggle("hidden", visibleCards.length === 0);
+      });
+
+      noResults?.classList.toggle("hidden", visibleCount > 0);
     });
-
-    sections.forEach((section) => {
-      const visibleCards = section.querySelectorAll("[data-game]:not(.hidden)");
-      section.classList.toggle("hidden", visibleCards.length === 0);
-    });
-
-    noResults?.classList.toggle("hidden", visibleCount > 0);
-  });
   }
 </script>
