@@ -12,6 +12,8 @@ export const siteUrl = "https://winboardgames.com";
 
 export const colonistUrl = "https://colonist.io";
 
+export const repoUrl = "https://github.com/colonistio/winboardgames";
+
 export const ui = {
   en: {
     siteName: "Win Board Games",
@@ -33,7 +35,8 @@ export const ui = {
     quickTips: "Quick winning principles",
     strategy: "Ideal strategy",
     resources: "Recommended learning",
-    related: "Related games"
+    related: "Related games",
+    contributeLink: "Contribute fixes on GitHub"
   },
   tr: {
     siteName: "Win Board Games",
@@ -55,7 +58,8 @@ export const ui = {
     quickTips: "Hizli kazanma ilkeleri",
     strategy: "Ideal strateji",
     resources: "Onerilen kaynaklar",
-    related: "Benzer oyunlar"
+    related: "Benzer oyunlar",
+    contributeLink: "GitHub'da duzeltme gonder"
   },
   de: {
     siteName: "Win Board Games",
@@ -77,6 +81,7 @@ export const ui = {
     quickTips: "Schnelle Gewinnprinzipien",
     strategy: "Ideale Strategie",
     resources: "Empfohlenes Lernen",
-    related: "Aehnliche Spiele"
+    related: "Aehnliche Spiele",
+    contributeLink: "Verbesserungen auf GitHub einreichen"
   }
 } as const;

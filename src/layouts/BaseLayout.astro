@@ -1,5 +1,5 @@
 ---
-import { languages, siteUrl, type Lang, ui } from "../data/site";
+import { languages, repoUrl, siteUrl, type Lang, ui } from "../data/site";
 import { localizePath } from "../data/games";
 
 type Props = {
@@ -708,6 +708,19 @@ const switcherPaths = Object.keys(languages).map((code) => ({
         font-size: 0.85rem;
       }
 
+      .footer-contribute {
+        margin: 0.55rem 0 0;
+      }
+
+      .footer-contribute a {
+        color: var(--muted);
+        text-decoration: none;
+      }
+
+      .footer-contribute a:hover {
+        color: var(--ink);
+      }
+
       .hidden {
         display: none !important;
       }
@@ -773,7 +786,12 @@ const switcherPaths = Object.keys(languages).map((code) => ({
         </details>
       </header>
       <slot />
-      <footer class="footer">© 2026 Win Board Games. {labels.tagline}</footer>
+      <footer class="footer">
+        <p>© 2026 Win Board Games. {labels.tagline}</p>
+        <p class="footer-contribute">
+          <a href={repoUrl} target="_blank" rel="noopener noreferrer">{labels.contributeLink}</a>
+        </p>
+      </footer>
     </div>
     <script>
       const dropdown = document.querySelector(".lang-dropdown");
