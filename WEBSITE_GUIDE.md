@@ -60,7 +60,7 @@ This website teaches practical strategies for winning board games. It should fee
 - Covers come from BoardGameGeek via `api.geekdo.com/api/geekitems` and are **self-hosted** in `public/games/` (do not hotlink BGG CDN URLs in production).
 - File naming: `public/games/bgg-<slug>.<ext>` (for example `bgg-pandemic.jpg`).
 - The fetch script validates that the BGG game name matches our catalog name before saving. Wrong ids are skipped so we never show the wrong box art.
-- Games without a BGG listing (or without a mapped id) keep `public/games/placeholder.svg`.
+- Games without a BGG listing use Wikimedia Commons or keep `public/games/placeholder.svg`.
 - To find a BGG id: open the game on boardgamegeek.com and copy the number from the URL (`/boardgame/<id>/...`).
 - After adding ids, run:
 
@@ -69,3 +69,8 @@ npm run fetch-images
 ```
 
 - The manifest `src/data/gameImages.ts` is regenerated automatically. `games.ts` reads it through `withImage()` — do not hand-edit the manifest.
+
+## Homepage Cards
+
+- Card subtitles come from each game's `tagline` or its first quick tip in the strategy guide — not a shared category subtitle.
+- Categories show one row on desktop and two rows on mobile, with a **Show all** control to expand.

@@ -36,7 +36,10 @@ export const ui = {
     strategy: "Ideal strategy",
     resources: "Recommended learning",
     related: "Related games",
-    contributeLink: "Contribute fixes on GitHub"
+    contributeLink: "Contribute fixes on GitHub",
+    aboutLink: "About this site",
+    showAllGames: "Show all",
+    showFewerGames: "Show less"
   },
   tr: {
     siteName: "Win Board Games",
@@ -59,7 +62,10 @@ export const ui = {
     strategy: "Ideal strateji",
     resources: "Onerilen kaynaklar",
     related: "Benzer oyunlar",
-    contributeLink: "GitHub'da duzeltme gonder"
+    contributeLink: "GitHub'da duzeltme gonder",
+    aboutLink: "Site hakkinda",
+    showAllGames: "Tumunu goster",
+    showFewerGames: "Daha az goster"
   },
   de: {
     siteName: "Win Board Games",
@@ -82,6 +88,54 @@ export const ui = {
     strategy: "Ideale Strategie",
     resources: "Empfohlenes Lernen",
     related: "Aehnliche Spiele",
-    contributeLink: "Verbesserungen auf GitHub einreichen"
+    contributeLink: "Verbesserungen auf GitHub einreichen",
+    aboutLink: "Ueber diese Seite",
+    showAllGames: "Alle anzeigen",
+    showFewerGames: "Weniger anzeigen"
+  }
+} as const;
+
+export const aboutContent = {
+  en: {
+    title: "About Win Board Games",
+    metaDescription:
+      "Win Board Games is a free library of practical board game strategy guides. Learn what the site covers and how to contribute on GitHub.",
+    intro:
+      "Win Board Games is a free reference for players who want to win more often — not after reading a novel, but after a short, focused guide they can use in their next game.",
+    missionTitle: "What we publish",
+    mission:
+      "We cover hundreds of board games across classics, euros, card games, dice games, word games, party games, co-ops, and strategy titles. Each guide includes quick winning principles, a step-by-step ideal strategy, and links for deeper learning on complicated games.",
+    contributeTitle: "Contribute on GitHub",
+    contribute:
+      "This site is open source. If a strategy is wrong, outdated, or missing, you can fix it directly on GitHub: fork the repository, edit the game data or guide content, and open a pull request. Every page links to the repo in the footer.",
+    contributeCta: "Open the GitHub repository"
+  },
+  tr: {
+    title: "Win Board Games Hakkinda",
+    metaDescription:
+      "Win Board Games, pratik kutu oyunu strateji rehberleri sunan ucretsiz bir kutuphanedir. Siteyi ve GitHub'da nasil katki yapabileceginizi ogrenin.",
+    intro:
+      "Win Board Games, daha cok kazanmak isteyen oyuncular icin ucretsiz bir kaynaktir — uzun makaleler degil, bir sonraki oyunda kullanabileceginiz kisa ve odakli rehberler.",
+    missionTitle: "Ne yayinliyoruz",
+    mission:
+      "Klasiklerden euro oyunlara, kart ve zar oyunlarindan kelime ve parti oyunlarina, isbirlikci ve strateji basliklarina yuzlerce oyunu kapsiyoruz. Her rehberde hizli kazanma ilkeleri, adim adim ideal strateji ve karmasik oyunlar icin derinlemesine kaynaklar var.",
+    contributeTitle: "GitHub'da katki yap",
+    contribute:
+      "Bu site acik kaynaklidir. Bir strateji yanlissa, guncel degilse veya eksikse GitHub uzerinden duzeltebilirsiniz: repoyu fork edin, oyun verisini veya rehber icerigini duzenleyin ve pull request acin. Her sayfanin altinda repo baglantisi var.",
+    contributeCta: "GitHub reposunu ac"
+  },
+  de: {
+    title: "Ueber Win Board Games",
+    metaDescription:
+      "Win Board Games ist eine kostenlose Bibliothek praktischer Brettspiel-Strategien. Erfahre, was die Seite bietet und wie du auf GitHub mitwirken kannst.",
+    intro:
+      "Win Board Games ist eine kostenlose Referenz fuer Spieler, die oefter gewinnen wollen — nicht nach einem Roman, sondern nach einem kurzen, fokussierten Guide fuer die naechste Partie.",
+    missionTitle: "Was wir veroeffentlichen",
+    mission:
+      "Wir decken Hunderte Brettspiele ab: Klassiker, Eurogames, Kartenspiele, Wuerfelspiele, Wortspiele, Partyspiele, Koop-Titel und Strategiespiele. Jeder Guide enthaelt schnelle Gewinnprinzipien, eine Schritt-fuer-Schritt-Strategie und Links zum Vertiefen bei komplexen Spielen.",
+    contributeTitle: "Auf GitHub mitwirken",
+    contribute:
+      "Diese Seite ist Open Source. Wenn eine Strategie falsch, veraltet oder unvollstaendig ist, kannst du sie direkt auf GitHub korrigieren: Repository forken, Spieldaten oder Guide-Inhalt bearbeiten und einen Pull Request oeffnen. Jede Seite verlinkt unten auf das Repo.",
+    contributeCta: "GitHub-Repository oeffnen"
   }
 } as const;

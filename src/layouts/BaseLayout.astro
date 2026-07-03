@@ -8,7 +8,7 @@ type Props = {
   description: string;
   path?: string;
   image?: string;
-  jsonLd?: Record<string, unknown>;
+  jsonLd?: Record<string, unknown> | Record<string, unknown>[];
 };
 
 const { lang, title, description, path = "/", image = "/og.svg", jsonLd } = Astro.props;
@@ -31,12 +31,19 @@ const switcherPaths = Object.keys(languages).map((code) => ({
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="author" content="Win Board Games" />
+    <meta name="theme-color" content="#0b0c0e" />
     <link rel="canonical" href={absoluteUrl} />
+    <link rel="sitemap" href={`${siteUrl}/sitemap.xml`} type="application/xml" />
     <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Win Board Games" />
+    <meta property="og:locale" content={lang === "en" ? "en_US" : lang === "tr" ? "tr_TR" : "de_DE"} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={absoluteUrl} />
     <meta property="og:image" content={imageUrl} />
+    <meta property="og:image:alt" content={title} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -431,6 +438,61 @@ const switcherPaths = Object.keys(languages).map((code) => ({
         color: var(--brand-soft);
       }
 
+      .hero-about {
+        margin: 0.85rem 0 0;
+      }
+
+      .hero-about a {
+        color: var(--muted);
+        font-size: 0.9rem;
+        text-decoration: none;
+      }
+
+      .hero-about a:hover {
+        color: var(--ink);
+      }
+
+      .category-grid-wrap {
+        display: grid;
+        gap: 0.65rem;
+      }
+
+      .category-grid.is-collapsed {
+        overflow: hidden;
+        max-height: 23rem;
+      }
+
+      .category-expand {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.35rem;
+        width: 100%;
+        padding: 0.65rem 0.9rem;
+        border: 1px solid var(--line);
+        border-radius: var(--radius-sm);
+        background: var(--bg-elev);
+        color: var(--muted);
+        font-size: 0.88rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: border-color 0.15s, color 0.15s, background 0.15s;
+      }
+
+      .category-expand:hover {
+        border-color: var(--line-strong);
+        color: var(--ink);
+        background: var(--card);
+      }
+
+      .category-grid.is-expanded + .category-expand .expand-chevron {
+        transform: rotate(180deg);
+      }
+
+      .expand-chevron {
+        transition: transform 0.2s ease;
+      }
+
       .guide-layout {
         display: grid;
         gap: 1rem;
@@ -730,6 +792,10 @@ const switcherPaths = Object.keys(languages).map((code) => ({
           grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
+        .category-grid.is-collapsed {
+          max-height: 12rem;
+        }
+
         .section-head p {
           display: block;
         }
@@ -742,6 +808,10 @@ const switcherPaths = Object.keys(languages).map((code) => ({
 
         .game-grid {
           grid-template-columns: repeat(5, minmax(0, 1fr));
+        }
+
+        .category-grid.is-collapsed {
+          max-height: 12rem;
         }
 
         .guide-layout {

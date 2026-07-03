@@ -1,8 +1,8 @@
 ---
 import HomePage from "../../components/HomePage.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { categories, guides, localizePath } from "../../data/games";
-import { type Lang, siteUrl, ui } from "../../data/site";
+import { guides, localizePath } from "../../data/games";
+import { type Lang, repoUrl, siteUrl, ui } from "../../data/site";
 
 export function getStaticPaths() {
   return [{ params: { lang: "tr" } }, { params: { lang: "de" } }];
@@ -13,20 +13,41 @@ const labels = ui[lang];
 const title = `${labels.siteName}: ${labels.allGames}`;
 const description = labels.pageDescription;
 const path = localizePath(lang);
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: labels.siteName,
-  url: new URL(path, siteUrl).toString(),
-  description,
-  inLanguage: lang,
-  about: categories.map((category) => category.name[lang]),
-  mainEntity: guides.map((guide) => ({
-    "@type": "Article",
-    headline: guide.metaTitle[lang],
-    url: new URL(localizePath(lang, guide.slug), siteUrl).toString()
-  }))
-};
+const pageUrl = new URL(path, siteUrl).toString();
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: labels.siteName,
+    url: siteUrl,
+    description: labels.tagline,
+    sameAs: [repoUrl]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: labels.siteName,
+    url: pageUrl,
+    description,
+    inLanguage: lang,
+    publisher: {
+      "@type": "Organization",
+      name: labels.siteName
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: labels.allGames,
+    numberOfItems: guides.length,
+    itemListElement: guides.slice(0, 50).map((guide, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: new URL(localizePath(lang, guide.slug), siteUrl).toString(),
+      name: guide.title
+    }))
+  }
+];
 ---
 
 <BaseLayout lang={lang} title={title} description={description} path={path} jsonLd={jsonLd}>

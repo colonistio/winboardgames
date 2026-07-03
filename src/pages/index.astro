@@ -1,32 +1,52 @@
 ---
 import HomePage from "../components/HomePage.astro";
 import BaseLayout from "../layouts/BaseLayout.astro";
-import { categories, guides } from "../data/games";
-import { siteUrl, ui } from "../data/site";
+import { guides } from "../data/games";
+import { repoUrl, siteUrl, ui } from "../data/site";
 
 const lang = "en";
 const labels = ui[lang];
 const title = `${labels.siteName}: Board Game Strategy Guides`;
 const description = labels.pageDescription;
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  name: labels.siteName,
-  url: siteUrl,
-  description,
-  inLanguage: lang,
-  potentialAction: {
-    "@type": "SearchAction",
-    target: `${siteUrl}/?q={search_term_string}`,
-    "query-input": "required name=search_term_string"
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: labels.siteName,
+    url: siteUrl,
+    description: labels.tagline,
+    sameAs: [repoUrl]
   },
-  about: categories.map((category) => category.name[lang]),
-  mainEntity: guides.map((guide) => ({
-    "@type": "Article",
-    headline: guide.metaTitle[lang],
-    url: `${siteUrl}/${guide.slug}`
-  }))
-};
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: labels.siteName,
+    url: siteUrl,
+    description,
+    inLanguage: lang,
+    publisher: {
+      "@type": "Organization",
+      name: labels.siteName
+    },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: `${siteUrl}/?q={search_term_string}`,
+      "query-input": "required name=search_term_string"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "ItemList",
+    name: labels.allGames,
+    numberOfItems: guides.length,
+    itemListElement: guides.slice(0, 50).map((guide, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      url: `${siteUrl}/${guide.slug}`,
+      name: guide.title
+    }))
+  }
+];
 ---
 
 <BaseLayout lang={lang} title={title} description={description} path="/" jsonLd={jsonLd}>

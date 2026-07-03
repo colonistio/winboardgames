@@ -1555,3 +1555,10 @@ export function localizePath(lang: Lang, slug?: string) {
   const cleanSlug = slug ? `/${slug}` : "";
   return lang === "en" ? cleanSlug || "/" : `/${lang}${cleanSlug}`;
 }
+
+export function cardSubtitleFor(game: GameListing, lang: Lang): string | null {
+  if (game.tagline?.[lang]) return game.tagline[lang];
+  const guide = guideBySlug[game.slug];
+  const tip = guide?.quickTips[lang]?.[0];
+  return tip ?? null;
+}

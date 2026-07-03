@@ -1,6 +1,6 @@
 ---
 import GameGuidePage from "../components/GameGuidePage.astro";
-import { guides, localizePath } from "../data/games";
+import { guides, listingBySlug, localizePath } from "../data/games";
 import { siteUrl } from "../data/site";
 import BaseLayout from "../layouts/BaseLayout.astro";
 
@@ -11,21 +11,48 @@ export function getStaticPaths() {
 const { guide } = Astro.props;
 const lang = "en";
 const path = localizePath(lang, guide.slug);
-const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "Article",
-  headline: guide.metaTitle[lang],
-  description: guide.metaDescription[lang],
-  dateModified: guide.updated,
-  inLanguage: lang,
-  mainEntityOfPage: new URL(path, siteUrl).toString(),
-  author: {
-    "@type": "Organization",
-    name: "Win Board Games"
+const listing = listingBySlug[guide.slug];
+const pageUrl = new URL(path, siteUrl).toString();
+const jsonLd = [
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: siteUrl },
+      { "@type": "ListItem", position: 2, name: guide.title, item: pageUrl }
+    ]
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: guide.metaTitle[lang],
+    description: guide.metaDescription[lang],
+    datePublished: guide.updated,
+    dateModified: guide.updated,
+    inLanguage: lang,
+    mainEntityOfPage: pageUrl,
+    image: listing?.image ? new URL(listing.image, siteUrl).toString() : new URL("/og.svg", siteUrl).toString(),
+    author: {
+      "@type": "Organization",
+      name: "Win Board Games",
+      url: siteUrl
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Win Board Games",
+      url: siteUrl
+    }
   }
-};
+];
 ---
 
-<BaseLayout lang={lang} title={guide.metaTitle[lang]} description={guide.metaDescription[lang]} path={path} jsonLd={jsonLd}>
+<BaseLayout
+  lang={lang}
+  title={guide.metaTitle[lang]}
+  description={guide.metaDescription[lang]}
+  path={path}
+  image={listing?.image}
+  jsonLd={jsonLd}
+>
   <GameGuidePage lang={lang} guide={guide} />
 </BaseLayout>

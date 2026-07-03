@@ -15,6 +15,11 @@ export async function GET() {
     priority: "1.0"
   }));
 
+  const aboutUrls: SitemapUrl[] = langs.map((lang) => ({
+    loc: new URL(localizePath(lang, "about"), siteUrl).toString(),
+    priority: "0.7"
+  }));
+
   const guideUrls: SitemapUrl[] = langs.flatMap((lang) =>
     guides.map((guide) => ({
       loc: new URL(localizePath(lang, guide.slug), siteUrl).toString(),
@@ -23,7 +28,7 @@ export async function GET() {
     }))
   );
 
-  const urls = [...homeUrls, ...guideUrls]
+  const urls = [...homeUrls, ...aboutUrls, ...guideUrls]
     .map(
       (url) => `<url><loc>${url.loc}</loc>${url.lastmod ? `<lastmod>${url.lastmod}</lastmod>` : ""}<priority>${url.priority}</priority></url>`
     )

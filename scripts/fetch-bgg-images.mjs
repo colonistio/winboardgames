@@ -51,11 +51,11 @@ const bggIds = {
   "isle-of-skye": 176494, sagrada: 199561, kingdomino: 204583,
   "planet-unknown": 258779, "its-a-wonderful-world": 271324,
 
-  // Card games
+  // Card games (solo/traditional — no BGG id = placeholder)
   hearts: 6887, bridge: 2181, poker: 1115, blackjack: 10816, rummy: 15878,
   "gin-rummy": 25574, canasta: 17104, cribbage: 2398, euchre: 6901, uno: 2223,
   "phase-10": 1258, "magic-the-gathering": 463, "yu-gi-oh": 4154,
-  "pokemon-tcg": 2165, "exploding-kittens": 172225, "love-letter": 129622,
+  "pokemon-tcg": 2165, solitaire: 10400, freecell: 63788, spades: 592, hangman: 5314, "exploding-kittens": 172225, "love-letter": 129622,
   "sushi-go": 133473, "the-mind": 244992, hanabi: 98778, "star-realms": 147020,
   "hero-realms": 198994, clank: 201808, "skip-bo": 1269, "dutch-blitz": 148203,
   coup: 131357, "the-crew": 284083,
@@ -153,7 +153,11 @@ const slugAliases = {
   "lord-of-the-rings-lcg": ["lord", "rings"],
   "dice-throne": ["dice", "throne"],
   "thats-pretty-clever": ["clever", "ganz"],
-  "magic-the-gathering": ["magic", "gathering"]
+  "magic-the-gathering": ["magic", "gathering"],
+  solitaire: ["patience", "klondike"],
+  freecell: ["freecell"],
+  spades: ["spades"],
+  hangman: ["hangman"]
 };
 
 function namesMatch(expected, actual, slug) {
@@ -241,6 +245,22 @@ async function main() {
     }
 
     await new Promise((r) => setTimeout(r, 350));
+  }
+
+  const manualImages = {
+    "spider-solitaire": "https://upload.wikimedia.org/wikipedia/commons/1/13/Spider_%28solitaire%29.jpg"
+  };
+
+  for (const [slug, url] of Object.entries(manualImages)) {
+    if (manifest[slug]) continue;
+    try {
+      const rel = `/games/bgg-${slug}.jpg`;
+      const size = await download(url, path.join(gamesDir, `bgg-${slug}.jpg`));
+      manifest[slug] = rel;
+      results.downloaded.push(`${slug} (manual, ${Math.round(size / 1024)}KB)`);
+    } catch (err) {
+      results.failed.push(`${slug}: ${err.message}`);
+    }
   }
 
   const sortedSlugs = Object.keys(manifest).sort();

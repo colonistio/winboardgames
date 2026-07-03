@@ -1,6 +1,6 @@
 ---
 import FooterSponsor from "./FooterSponsor.astro";
-import { categories, featuredListings, guideBySlug, localizePath } from "../data/games";
+import { cardSubtitleFor, categories, featuredListings, guideBySlug, localizePath } from "../data/games";
 import { type Lang, ui } from "../data/site";
 
 type Props = {
@@ -10,12 +10,19 @@ type Props = {
 const { lang } = Astro.props;
 const labels = ui[lang];
 const placeholder = "/games/placeholder.svg";
+
+function subtitleFor(game: (typeof categories)[number]["games"][number]) {
+  return cardSubtitleFor(game, lang);
+}
 ---
 
 <section class="hero">
   <span class="eyebrow">{labels.allGames}</span>
   <h1>{labels.siteName}</h1>
   <p>{labels.tagline}</p>
+  <p class="hero-about">
+    <a href={localizePath(lang, "about")}>{labels.aboutLink}</a>
+  </p>
 </section>
 
 <div class="search-wrap">
@@ -28,57 +35,77 @@ const placeholder = "/games/placeholder.svg";
   </div>
   <div class="game-grid">
     {
-      featuredListings.map((game) => (
-        <a class="game-card" href={localizePath(lang, game.slug)} data-game={`${game.name} featured`}>
-          <span class={`card-thumb${game.image ? "" : " is-placeholder"}`}>
-            <img src={game.image ?? placeholder} alt={game.name} loading="lazy" width="400" height="260" />
-          </span>
-          <span class="card-body">
-            <strong>{game.name}</strong>
-            <span class="card-sub">{game.tagline ? game.tagline[lang] : labels.readGuide}</span>
-          </span>
-        </a>
-      ))
+      featuredListings.map((game) => {
+        const subtitle = subtitleFor(game);
+        return (
+          <a class="game-card" href={localizePath(lang, game.slug)} data-game={`${game.name} featured`}>
+            <span class={`card-thumb${game.image ? "" : " is-placeholder"}`}>
+              <img src={game.image ?? placeholder} alt={game.name} loading="lazy" width="400" height="260" />
+            </span>
+            <span class="card-body">
+              <strong>{game.name}</strong>
+              {subtitle && <span class="card-sub">{subtitle}</span>}
+            </span>
+          </a>
+        );
+      })
     }
   </div>
 </section>
 
 {
-  categories.map((category) => (
-    <section class="section" id={category.id} data-category>
-      <div class="section-head">
-        <h2>{category.name[lang]}</h2>
-        <p>{category.description[lang]}</p>
-      </div>
-      <div class="game-grid">
-        {category.games.map((game) => {
-          const hasGuide = Boolean(guideBySlug[game.slug]);
-          const subtitle = game.tagline ? game.tagline[lang] : category.cardSubtitle[lang];
-          const inner = (
-            <>
-              <span class={`card-thumb${game.image ? "" : " is-placeholder"}`}>
-                <img src={game.image ?? placeholder} alt={game.name} loading="lazy" width="400" height="260" />
-              </span>
-              <span class="card-body">
-                <strong>{game.name}</strong>
-                <span class="card-sub">{subtitle}</span>
-              </span>
-            </>
-          );
+  categories.map((category) => {
+    const gameCount = category.games.length;
+    return (
+      <section class="section category-section" id={category.id} data-category data-game-count={gameCount}>
+        <div class="section-head">
+          <h2>{category.name[lang]}</h2>
+          <p>{category.description[lang]}</p>
+        </div>
+        <div class="category-grid-wrap">
+          <div class="game-grid category-grid is-collapsed">
+            {category.games.map((game) => {
+              const hasGuide = Boolean(guideBySlug[game.slug]);
+              const subtitle = subtitleFor(game);
+              const inner = (
+                <>
+                  <span class={`card-thumb${game.image ? "" : " is-placeholder"}`}>
+                    <img src={game.image ?? placeholder} alt={game.name} loading="lazy" width="400" height="260" />
+                  </span>
+                  <span class="card-body">
+                    <strong>{game.name}</strong>
+                    {subtitle && <span class="card-sub">{subtitle}</span>}
+                  </span>
+                </>
+              );
 
-          return hasGuide ? (
-            <a class="game-card" href={localizePath(lang, game.slug)} data-game={`${game.name} ${category.name[lang]}`}>
-              {inner}
-            </a>
-          ) : (
-            <article class="game-card" data-game={`${game.name} ${category.name[lang]}`}>
-              {inner}
-            </article>
-          );
-        })}
-      </div>
-    </section>
-  ))
+              return hasGuide ? (
+                <a class="game-card" href={localizePath(lang, game.slug)} data-game={`${game.name} ${category.name[lang]}`}>
+                  {inner}
+                </a>
+              ) : (
+                <article class="game-card" data-game={`${game.name} ${category.name[lang]}`}>
+                  {inner}
+                </article>
+              );
+            })}
+          </div>
+          <button
+            class="category-expand hidden"
+            type="button"
+            aria-expanded="false"
+            data-show-all={labels.showAllGames}
+            data-show-less={labels.showFewerGames}
+          >
+            <span class="expand-label">{labels.showAllGames}</span>
+            <svg class="expand-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M6 9l6 6 6-6" />
+            </svg>
+          </button>
+        </div>
+      </section>
+    );
+  })
 }
 
 <p id="no-results" class="hidden">{labels.noResults}</p>
@@ -90,6 +117,55 @@ const placeholder = "/games/placeholder.svg";
   const cards = Array.from(document.querySelectorAll("[data-game]"));
   const sections = Array.from(document.querySelectorAll("[data-category]"));
   const noResults = document.getElementById("no-results");
+
+  function collapseLimit() {
+    if (window.matchMedia("(min-width: 900px)").matches) return 5;
+    if (window.matchMedia("(min-width: 620px)").matches) return 3;
+    return 4;
+  }
+
+  function setupCategoryExpanders() {
+    const limit = collapseLimit();
+
+    document.querySelectorAll(".category-section").forEach((section) => {
+      const count = Number(section.getAttribute("data-game-count") ?? "0");
+      const grid = section.querySelector(".category-grid");
+      const button = section.querySelector(".category-expand");
+      const label = button?.querySelector(".expand-label");
+
+      if (!(grid instanceof HTMLElement) || !(button instanceof HTMLButtonElement) || !(label instanceof HTMLElement)) {
+        return;
+      }
+
+      if (count <= limit) {
+        grid.classList.remove("is-collapsed");
+        button.classList.add("hidden");
+        return;
+      }
+
+      button.classList.remove("hidden");
+      const showAll = button.dataset.showAll ?? "Show all";
+      const showLess = button.dataset.showLess ?? "Show less";
+      const expanded = grid.classList.contains("is-expanded");
+
+      label.textContent = expanded ? showLess : showAll;
+      button.setAttribute("aria-expanded", expanded ? "true" : "false");
+      grid.classList.toggle("is-collapsed", !expanded);
+
+      if (!button.dataset.bound) {
+        button.dataset.bound = "true";
+        button.addEventListener("click", () => {
+          const isExpanded = grid.classList.toggle("is-expanded");
+          grid.classList.toggle("is-collapsed", !isExpanded);
+          label.textContent = isExpanded ? showLess : showAll;
+          button.setAttribute("aria-expanded", isExpanded ? "true" : "false");
+        });
+      }
+    });
+  }
+
+  setupCategoryExpanders();
+  window.addEventListener("resize", setupCategoryExpanders);
 
   if (search instanceof HTMLInputElement) {
     search.addEventListener("input", () => {
@@ -105,7 +181,18 @@ const placeholder = "/games/placeholder.svg";
 
       sections.forEach((section) => {
         const visibleCards = section.querySelectorAll("[data-game]:not(.hidden)");
-        section.classList.toggle("hidden", visibleCards.length === 0);
+        const hidden = visibleCards.length === 0;
+        section.classList.toggle("hidden", hidden);
+
+        if (!hidden && query) {
+          const grid = section.querySelector(".category-grid");
+          const button = section.querySelector(".category-expand");
+          grid?.classList.remove("is-collapsed");
+          grid?.classList.add("is-expanded");
+          button?.classList.add("hidden");
+        } else if (!query) {
+          setupCategoryExpanders();
+        }
       });
 
       noResults?.classList.toggle("hidden", visibleCount > 0);
