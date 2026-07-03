@@ -1,0 +1,35 @@
+---
+import GameGuidePage from "../../components/GameGuidePage.astro";
+import { guides, localizePath } from "../../data/games";
+import { type Lang, siteUrl } from "../../data/site";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export function getStaticPaths() {
+  return ["tr", "de"].flatMap((lang) =>
+    guides.map((guide) => ({
+      params: { lang, slug: guide.slug },
+      props: { guide, lang }
+    }))
+  );
+}
+
+const { guide, lang } = Astro.props as { guide: (typeof guides)[number]; lang: Lang };
+const path = localizePath(lang, guide.slug);
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  headline: guide.metaTitle[lang],
+  description: guide.metaDescription[lang],
+  dateModified: guide.updated,
+  inLanguage: lang,
+  mainEntityOfPage: new URL(path, siteUrl).toString(),
+  author: {
+    "@type": "Organization",
+    name: "Win Board Games"
+  }
+};
+---
+
+<BaseLayout lang={lang} title={guide.metaTitle[lang]} description={guide.metaDescription[lang]} path={path} jsonLd={jsonLd}>
+  <GameGuidePage lang={lang} guide={guide} />
+</BaseLayout>

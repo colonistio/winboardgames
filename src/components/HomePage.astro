@@ -1,0 +1,104 @@
+---
+import FooterSponsor from "./FooterSponsor.astro";
+import { categories, featuredListings, guideBySlug, localizePath } from "../data/games";
+import { type Lang, ui } from "../data/site";
+
+type Props = {
+  lang: Lang;
+};
+
+const { lang } = Astro.props;
+const labels = ui[lang];
+const cardLabel = (slug: string) => (guideBySlug[slug] ? labels.readGuide : "Coming soon");
+const cardHref = (slug: string) => (guideBySlug[slug] ? localizePath(lang, slug) : undefined);
+---
+
+<section class="hero">
+  <span class="eyebrow">{labels.allGames}</span>
+  <h1>{labels.siteName}</h1>
+  <p>{labels.tagline}</p>
+</section>
+
+<div class="search-wrap">
+  <input class="search-box" id="game-search" type="search" placeholder={labels.searchPlaceholder} autocomplete="off" />
+</div>
+
+<section class="section featured">
+  <div class="section-head">
+    <h2>{labels.featured}</h2>
+  </div>
+  <div class="game-grid">
+    {
+      featuredListings.map((game) => (
+        <a class="game-card" href={localizePath(lang, game.slug)} data-game={`${game.name} featured`}>
+          <strong>{game.name}</strong>
+          <span>{labels.readGuide}</span>
+        </a>
+      ))
+    }
+  </div>
+</section>
+
+{
+  categories.map((category) => (
+    <section class="section" id={category.id} data-category>
+      <div class="section-head">
+        <h2>{category.name[lang]}</h2>
+        <p>{category.description[lang]}</p>
+      </div>
+      <div class="game-grid">
+        {category.games.map((game) => {
+          const href = cardHref(game.slug);
+          const content = (
+            <>
+              <strong>{game.name}</strong>
+              <span>{cardLabel(game.slug)}</span>
+            </>
+          );
+
+          return href ? (
+            <a class="game-card" href={href} data-game={`${game.name} ${category.name[lang]}`}>
+              {content}
+            </a>
+          ) : (
+            <article class="game-card" data-game={`${game.name} ${category.name[lang]}`}>
+              {content}
+            </article>
+          );
+        })}
+      </div>
+    </section>
+  ))
+}
+
+<p id="no-results" class="hidden">{labels.noResults}</p>
+
+<FooterSponsor lang={lang} />
+
+<script>
+  const search = document.querySelector("#game-search");
+  const cards = Array.from(document.querySelectorAll("[data-game]"));
+  const sections = Array.from(document.querySelectorAll("[data-category]"));
+  const noResults = document.getElementById("no-results");
+
+  if (search instanceof HTMLInputElement) {
+    search.addEventListener("input", () => {
+    const query = search.value.trim().toLowerCase();
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const text = card.getAttribute("data-game")?.toLowerCase() ?? "";
+      const isVisible = !query || text.includes(query);
+      card.classList.toggle("hidden", !isVisible);
+      if (isVisible) visibleCount += 1;
+    });
+
+    sections.forEach((section) => {
+      const visibleCards = section.querySelectorAll("[data-game]:not(.hidden)");
+      section.classList.toggle("hidden", visibleCards.length === 0);
+    });
+
+    noResults?.classList.toggle("hidden", visibleCount > 0);
+  });
+  }
+</script>

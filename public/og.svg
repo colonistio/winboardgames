@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#fff7ed"/>
+  <circle cx="1050" cy="80" r="260" fill="#fed7aa"/>
+  <circle cx="120" cy="560" r="220" fill="#ffedd5"/>
+  <rect x="80" y="80" width="1040" height="470" rx="48" fill="#ffffff" stroke="#fed7aa" stroke-width="8"/>
+  <text x="140" y="260" fill="#1f2937" font-family="Arial, sans-serif" font-size="92" font-weight="900">Win Board Games</text>
+  <text x="146" y="350" fill="#6b7280" font-family="Arial, sans-serif" font-size="42" font-weight="700">Practical strategies for every board game</text>
+  <rect x="146" y="405" width="290" height="72" rx="36" fill="#16a34a"/>
+  <text x="186" y="453" fill="#ffffff" font-family="Arial, sans-serif" font-size="32" font-weight="900">Start winning</text>
+</svg>
