@@ -457,9 +457,8 @@ const switcherPaths = Object.keys(languages).map((code) => ({
         gap: 0.65rem;
       }
 
-      .category-grid.is-collapsed {
-        overflow: hidden;
-        max-height: 23rem;
+      .category-grid.is-collapsed .game-card:nth-child(n + 5) {
+        display: none;
       }
 
       .category-expand {
@@ -792,8 +791,8 @@ const switcherPaths = Object.keys(languages).map((code) => ({
           grid-template-columns: repeat(3, minmax(0, 1fr));
         }
 
-        .category-grid.is-collapsed {
-          max-height: 12rem;
+        .category-grid.is-collapsed .game-card:nth-child(n + 4) {
+          display: none;
         }
 
         .section-head p {
@@ -810,8 +809,12 @@ const switcherPaths = Object.keys(languages).map((code) => ({
           grid-template-columns: repeat(5, minmax(0, 1fr));
         }
 
-        .category-grid.is-collapsed {
-          max-height: 12rem;
+        .category-grid.is-collapsed .game-card:nth-child(n + 4) {
+          display: flex;
+        }
+
+        .category-grid.is-collapsed .game-card:nth-child(n + 6) {
+          display: none;
         }
 
         .guide-layout {
