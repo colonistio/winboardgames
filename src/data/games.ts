@@ -36,7 +36,7 @@ const classics: GameListing[] = [
     name: "Monopoly",
     slug: "monopoly",
     featured: true,
-    image: "/games/monopoly.svg",
+    image: "/games/bgg-monopoly.jpg",
     tagline: {
       en: "Corner the board and bankrupt everyone",
       tr: "Tahtayi ele gecir ve herkesi iflas ettir",
@@ -47,7 +47,7 @@ const classics: GameListing[] = [
     name: "Chess",
     slug: "chess",
     featured: true,
-    image: "/games/chess.svg",
+    image: "/games/bgg-chess.jpg",
     tagline: {
       en: "Stop blundering and start converting wins",
       tr: "Hata yapmayi birak, kazanmaya basla",
@@ -62,7 +62,7 @@ const classics: GameListing[] = [
     name: "Scrabble",
     slug: "scrabble",
     featured: true,
-    image: "/games/scrabble.svg",
+    image: "/games/bgg-scrabble.jpg",
     tagline: {
       en: "Score big with tile balance and bingos",
       tr: "Tas dengesi ve bingolarla cok puan al",
@@ -99,7 +99,7 @@ const euros: GameListing[] = [
     name: "Catan",
     slug: "catan",
     featured: true,
-    image: "/games/catan.svg",
+    image: "/games/bgg-catan.png",
     tagline: {
       en: "Pick the right spots, trade like a shark",
       tr: "Dogru koseleri sec, kurt gibi takas yap",
@@ -110,7 +110,7 @@ const euros: GameListing[] = [
     name: "Carcassonne",
     slug: "carcassonne",
     featured: true,
-    image: "/games/carcassonne.svg",
+    image: "/games/bgg-carcassonne.jpg",
     tagline: {
       en: "Free your meeples and out-score rivals",
       tr: "Meeple'larini kurtar, rakipleri geride birak",
@@ -641,21 +641,21 @@ export const guides: GameGuide[] = [
     resources: {
       en: [
         { label: "Practice Catan-style games on Colonist.io", url: "https://colonist.io" },
-        { label: "Catan strategy forums on BoardGameGeek", url: "https://boardgamegeek.com/boardgame/13/catan" },
-        { label: "r/Catan strategy community", url: "https://www.reddit.com/r/Catan/" },
-        { label: "Catan overview on Wikipedia", url: "https://en.wikipedia.org/wiki/Catan" }
+        { label: "Colonist Catan rules and setup guide", url: "https://colonist.io/catan-rules" },
+        { label: "Colonist strategy videos on YouTube", url: "https://www.youtube.com/@colonistio" },
+        { label: "r/Colonist community", url: "https://www.reddit.com/r/Colonist/" }
       ],
       tr: [
         { label: "Colonist.io'da Catan tarzi pratik yap", url: "https://colonist.io" },
-        { label: "BoardGameGeek'te Catan strateji forumlari", url: "https://boardgamegeek.com/boardgame/13/catan" },
-        { label: "r/Catan strateji toplulugu", url: "https://www.reddit.com/r/Catan/" },
-        { label: "Wikipedia'da Catan'a genel bakis", url: "https://en.wikipedia.org/wiki/Catan" }
+        { label: "Colonist Catan kurallari ve kurulum rehberi", url: "https://colonist.io/catan-rules" },
+        { label: "YouTube'da Colonist strateji videolari", url: "https://www.youtube.com/@colonistio" },
+        { label: "r/Colonist toplulugu", url: "https://www.reddit.com/r/Colonist/" }
       ],
       de: [
         { label: "Catan-aehnlich auf Colonist.io ueben", url: "https://colonist.io" },
-        { label: "Catan-Strategieforen auf BoardGameGeek", url: "https://boardgamegeek.com/boardgame/13/catan" },
-        { label: "r/Catan Strategie-Community", url: "https://www.reddit.com/r/Catan/" },
-        { label: "Catan-Ueberblick auf Wikipedia", url: "https://en.wikipedia.org/wiki/Catan" }
+        { label: "Colonist Catan-Regeln und Aufbau-Guide", url: "https://colonist.io/catan-rules" },
+        { label: "Colonist Strategie-Videos auf YouTube", url: "https://www.youtube.com/@colonistio" },
+        { label: "r/Colonist Community", url: "https://www.reddit.com/r/Colonist/" }
       ]
     },
     relatedSlugs: ["carcassonne", "ticket-to-ride", "splendor"]

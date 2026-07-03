@@ -30,7 +30,7 @@ const placeholder = "/games/placeholder.svg";
     {
       featuredListings.map((game) => (
         <a class="game-card" href={localizePath(lang, game.slug)} data-game={`${game.name} featured`}>
-          <span class="card-thumb">
+          <span class={`card-thumb${game.image ? "" : " is-placeholder"}`}>
             <img src={game.image ?? placeholder} alt={game.name} loading="lazy" width="400" height="260" />
           </span>
           <span class="card-body">
@@ -56,7 +56,7 @@ const placeholder = "/games/placeholder.svg";
           const subtitle = game.tagline ? game.tagline[lang] : category.cardSubtitle[lang];
           const inner = (
             <>
-              <span class="card-thumb">
+              <span class={`card-thumb${game.image ? "" : " is-placeholder"}`}>
                 <img src={game.image ?? placeholder} alt={game.name} loading="lazy" width="400" height="260" />
               </span>
               <span class="card-body">
