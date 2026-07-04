@@ -47,10 +47,24 @@ This website teaches practical strategies for winning board games. It should fee
 - Homepage component: `src/components/HomePage.astro`.
 - Strategy page component: `src/components/GameGuidePage.astro`.
 
+## Strategy Guide Content
+
+- Every game has a **per-game expert guide** in `scripts/expert-data/` (classics, euros, cards, dice, words, party, cooperative, strategyWar).
+- Guides target top-tier play: named openings, probability, meta, and concrete tactics — not generic filler.
+- Compiled output: `src/data/expert/guides.ts` (auto-generated).
+- After editing expert source files, run:
+
+```bash
+npm run build-expert-guides
+```
+
+- To add a new game: add it to the catalog in `games.ts`, add expert content for its slug in the right `scripts/expert-data/*.mjs` file, then run `build-expert-guides` and `npm run build`.
+
 ## Adding a New Game (checklist)
 
 1. Add the game to the right category array in `src/data/games.ts` (`name`, `slug`, optional `tagline`).
-2. Add a strategy guide entry (hand-written in `curatedGuides`, or let the category generator create one).
+2. Add expert strategy content for the slug in the matching `scripts/expert-data/*.mjs` file.
+3. Run `npm run build-expert-guides` to refresh `src/data/expert/guides.ts`.
 3. Add a BoardGameGeek id for the cover image in `scripts/fetch-bgg-images.mjs` under `bggIds`.
 4. Run `npm run fetch-images` to download the cover and refresh `src/data/gameImages.ts`.
 5. Build locally with `npm run build` and confirm the homepage card shows the new cover.

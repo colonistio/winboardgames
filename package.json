@@ -7,7 +7,8 @@
     "dev": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
-    "fetch-images": "node scripts/fetch-bgg-images.mjs"
+    "fetch-images": "node scripts/fetch-bgg-images.mjs",
+    "build-expert-guides": "node scripts/build-expert-guides.mjs"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.9",
