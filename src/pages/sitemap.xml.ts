@@ -1,7 +1,7 @@
 import { guides, localizePath } from "../data/games";
-import { siteUrl, type Lang } from "../data/site";
+import { allLangs, siteUrl } from "../data/site";
 
-const langs: Lang[] = ["en", "tr", "de"];
+const langs = allLangs;
 
 type SitemapUrl = {
   loc: string;

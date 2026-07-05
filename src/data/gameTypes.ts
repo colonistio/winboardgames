@@ -5,7 +5,7 @@ export type GameListing = {
   slug: string;
   featured?: boolean;
   image?: string;
-  tagline?: Record<Lang, string>;
+  tagline?: Partial<Record<Lang, string>>;
 };
 
 export type GameCategory = {

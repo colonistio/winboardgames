@@ -1,6 +1,8 @@
 import type { Lang } from "./site";
 import { gameImages } from "./gameImages";
 import type { GameCategory, GameGuide, GameListing } from "./gameTypes";
+import { catField } from "./i18n/categories";
+import { taglineFor } from "./i18n/taglines";
 import { expertBySlug } from "./expert/guides";
 import { buildAllExpertGuides } from "./expert/build";
 
@@ -11,6 +13,12 @@ function withImage(game: GameListing): GameListing {
     ...game,
     image: game.image ?? gameImages[game.slug]
   };
+}
+
+function enrichListing(game: GameListing): GameListing {
+  const listing = withImage(game);
+  if (!listing.tagline) return listing;
+  return { ...listing, tagline: taglineFor(listing.slug, listing.tagline)! };
 }
 
 const classics: GameListing[] = [
@@ -298,155 +306,155 @@ const strategyWar: GameListing[] = [
 export const categories: GameCategory[] = [
   {
     id: "classic-board-games",
-    name: {
+    name: catField("classic-board-games", "name", {
       en: "Classic Board Games",
       tr: "Klasik Kutu Oyunlari",
       de: "Klassische Brettspiele"
-    },
-    description: {
+    }),
+    description: catField("classic-board-games", "description", {
       en: "Evergreen games with simple rules, deep habits, and high search demand.",
       tr: "Basit kuralli, kalici ve cok aranan klasik oyunlar.",
       de: "Zeitlose Spiele mit einfachen Regeln, starken Mustern und hoher Nachfrage."
-    },
-    cardSubtitle: {
+    }),
+    cardSubtitle: catField("classic-board-games", "cardSubtitle", {
       en: "Timeless tactics to win",
       tr: "Kazandiran zamansiz taktikler",
       de: "Zeitlose Taktiken zum Sieg"
-    },
-    games: classics.map(withImage)
+    }),
+    games: classics.map(enrichListing)
   },
   {
     id: "euro-board-games",
-    name: {
+    name: catField("euro-board-games", "name", {
       en: "Euro Board Games",
       tr: "Euro Kutu Oyunlari",
       de: "Euro-Brettspiele"
-    },
-    description: {
+    }),
+    description: catField("euro-board-games", "description", {
       en: "Resource, engine-building, tile-laying, and modern strategy games.",
       tr: "Kaynak, motor kurma, karo yerlestirme ve modern strateji oyunlari.",
       de: "Ressourcen-, Engine-Building-, Plattchenlege- und moderne Strategiespiele."
-    },
-    cardSubtitle: {
+    }),
+    cardSubtitle: catField("euro-board-games", "cardSubtitle", {
       en: "Engine-building & scoring edges",
       tr: "Motor kurma ve puan avantajlari",
       de: "Engine-Building & Punktevorteile"
-    },
-    games: euros.map(withImage)
+    }),
+    games: euros.map(enrichListing)
   },
   {
     id: "card-games",
-    name: {
+    name: catField("card-games", "name", {
       en: "Card Games",
       tr: "Kart Oyunlari",
       de: "Kartenspiele"
-    },
-    description: {
+    }),
+    description: catField("card-games", "description", {
       en: "Solo card puzzles, trick-taking classics, party cards, and trading card games.",
       tr: "Tek kisilik kart bulmacalari, koz oyunlari, parti kartlari ve koleksiyon kart oyunlari.",
       de: "Solo-Kartenraetsel, Stichspiele, Party-Karten und Sammelkartenspiele."
-    },
-    cardSubtitle: {
+    }),
+    cardSubtitle: catField("card-games", "cardSubtitle", {
       en: "Odds, bluffs & winning plays",
       tr: "Olasilik, blof ve kazanan hamleler",
       de: "Chancen, Bluffs & Gewinnzuege"
-    },
-    games: cards.map(withImage)
+    }),
+    games: cards.map(enrichListing)
   },
   {
     id: "dice-games",
-    name: {
+    name: catField("dice-games", "name", {
       en: "Dice Games",
       tr: "Zar Oyunlari",
       de: "Wuerfelspiele"
-    },
-    description: {
+    }),
+    description: catField("dice-games", "description", {
       en: "Push-your-luck and probability games where risk timing matters.",
       tr: "Risk alma ve olasilik hesaplamasinin onemli oldugu zar oyunlari.",
       de: "Gluecksreiz- und Wahrscheinlichkeitsspiele, in denen Timing entscheidet."
-    },
-    cardSubtitle: {
+    }),
+    cardSubtitle: catField("dice-games", "cardSubtitle", {
       en: "Master risk and probability",
       tr: "Risk ve olasiligi yonet",
       de: "Risiko und Wahrscheinlichkeit meistern"
-    },
-    games: dice.map(withImage)
+    }),
+    games: dice.map(enrichListing)
   },
   {
     id: "word-games",
-    name: {
+    name: catField("word-games", "name", {
       en: "Word Games",
       tr: "Kelime Oyunlari",
       de: "Wortspiele"
-    },
-    description: {
+    }),
+    description: catField("word-games", "description", {
       en: "Vocabulary, clue-giving, spelling, and deduction games.",
       tr: "Kelime bilgisi, ipucu verme, heceleme ve cikarim oyunlari.",
       de: "Wortschatz-, Hinweis-, Rechtschreib- und Deduktionsspiele."
-    },
-    cardSubtitle: {
+    }),
+    cardSubtitle: catField("word-games", "cardSubtitle", {
       en: "Outsmart with words & clues",
       tr: "Kelime ve ipuclariyla one gec",
       de: "Mit Woertern & Hinweisen gewinnen"
-    },
-    games: words.map(withImage)
+    }),
+    games: words.map(enrichListing)
   },
   {
     id: "party-family-games",
-    name: {
+    name: catField("party-family-games", "name", {
       en: "Party & Family Games",
       tr: "Parti ve Aile Oyunlari",
       de: "Party- und Familienspiele"
-    },
-    description: {
+    }),
+    description: catField("party-family-games", "description", {
       en: "Fast, social, easy-to-teach games for mixed groups.",
       tr: "Karma gruplar icin hizli, sosyal ve kolay ogretilen oyunlar.",
       de: "Schnelle, soziale und leicht erklaerbare Spiele fuer gemischte Gruppen."
-    },
-    cardSubtitle: {
+    }),
+    cardSubtitle: catField("party-family-games", "cardSubtitle", {
       en: "Read the table, come out ahead",
       tr: "Masayi oku, one gec",
       de: "Den Tisch lesen und vorn liegen"
-    },
-    games: partyFamily.map(withImage)
+    }),
+    games: partyFamily.map(enrichListing)
   },
   {
     id: "cooperative-games",
-    name: {
+    name: catField("cooperative-games", "name", {
       en: "Cooperative Games",
       tr: "Isbirlikci Oyunlar",
       de: "Kooperative Spiele"
-    },
-    description: {
+    }),
+    description: catField("cooperative-games", "description", {
       en: "Team games where planning, role discipline, and shared information win.",
       tr: "Planlama, rol disiplini ve ortak bilginin kazandirdigi takim oyunlari.",
       de: "Teamspiele, in denen Planung, Rollenfokus und geteilte Informationen gewinnen."
-    },
-    cardSubtitle: {
+    }),
+    cardSubtitle: catField("cooperative-games", "cardSubtitle", {
       en: "Beat the game as a team",
       tr: "Oyunu takim olarak yen",
       de: "Das Spiel im Team besiegen"
-    },
-    games: cooperative.map(withImage)
+    }),
+    games: cooperative.map(enrichListing)
   },
   {
     id: "strategy-war-games",
-    name: {
+    name: catField("strategy-war-games", "name", {
       en: "Strategy & War Games",
       tr: "Strateji ve Savas Oyunlari",
       de: "Strategie- und Kriegsspiele"
-    },
-    description: {
+    }),
+    description: catField("strategy-war-games", "description", {
       en: "Conflict, negotiation, area control, and abstract strategy games.",
       tr: "Catisma, pazarlik, alan kontrolu ve soyut strateji oyunlari.",
       de: "Konflikt-, Verhandlungs-, Gebietskontroll- und abstrakte Strategiespiele."
-    },
-    cardSubtitle: {
+    }),
+    cardSubtitle: catField("strategy-war-games", "cardSubtitle", {
       en: "Outmaneuver and dominate",
       tr: "Manevrayla ustunluk kur",
       de: "Ueberliste und dominiere"
-    },
-    games: strategyWar.map(withImage)
+    }),
+    games: strategyWar.map(enrichListing)
   }
 ];
 

@@ -1,20 +1,13 @@
-export type Lang = "en" | "tr" | "de";
+export type { Lang } from "./langs";
+export { languages, defaultLang, nonDefaultLangs, allLangs, ogLocales, isLangCode, slugFromPath } from "./langs";
 
-export const languages: Record<Lang, string> = {
-  en: "English",
-  tr: "Turkce",
-  de: "Deutsch"
-};
-
-export const defaultLang: Lang = "en";
+import { aboutExtra, uiExtra } from "./i18n/extra";
 
 export const siteUrl = "https://winboardgames.com";
-
 export const colonistUrl = "https://colonist.io";
-
 export const repoUrl = "https://github.com/colonistio/winboardgames";
 
-export const ui = {
+const uiBase = {
   en: {
     siteName: "Win Board Games",
     tagline: "Short, practical strategies for winning classic, family, and modern board games.",
@@ -23,8 +16,7 @@ export const ui = {
     allGames: "Board Game Strategies",
     readGuide: "Read strategy",
     sponsorTitle: "Best online Catan alternative",
-    sponsorText:
-      "Play Catan-style games online with friends at Colonist.io.",
+    sponsorText: "Play Catan-style games online with friends at Colonist.io.",
     sponsorCta: "Play on Colonist.io",
     languages: "Languages",
     noResults: "No games match your search yet.",
@@ -49,8 +41,7 @@ export const ui = {
     allGames: "Kutu Oyunu Stratejileri",
     readGuide: "Stratejiyi oku",
     sponsorTitle: "En iyi online Catan alternatifi",
-    sponsorText:
-      "Arkadaslarinla Catan tarzi oyunlari Colonist.io'da online oyna.",
+    sponsorText: "Arkadaslarinla Catan tarzi oyunlari Colonist.io'da online oyna.",
     sponsorCta: "Colonist.io'da oyna",
     languages: "Diller",
     noResults: "Aramanla eslesen oyun henuz yok.",
@@ -75,8 +66,7 @@ export const ui = {
     allGames: "Brettspiel-Strategien",
     readGuide: "Strategie lesen",
     sponsorTitle: "Beste Online-Catan-Alternative",
-    sponsorText:
-      "Spiele Catan-aehnliche Partien online mit Freunden auf Colonist.io.",
+    sponsorText: "Spiele Catan-aehnliche Partien online mit Freunden auf Colonist.io.",
     sponsorCta: "Auf Colonist.io spielen",
     languages: "Sprachen",
     noResults: "Noch keine Spiele zu dieser Suche gefunden.",
@@ -95,7 +85,7 @@ export const ui = {
   }
 } as const;
 
-export const aboutContent = {
+const aboutBase = {
   en: {
     title: "About Win Board Games",
     metaDescription:
@@ -139,3 +129,6 @@ export const aboutContent = {
     contributeCta: "GitHub-Repository oeffnen"
   }
 } as const;
+
+export const ui = { ...uiBase, ...uiExtra };
+export const aboutContent = { ...aboutBase, ...aboutExtra };

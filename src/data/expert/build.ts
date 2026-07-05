@@ -1,9 +1,10 @@
 import type { Lang } from "../site";
+import { allLangs } from "../langs";
 import type { GameGuide, GameListing } from "../gameTypes";
 import { metaTitleTemplates } from "./meta";
 import type { ExpertEntry, ExpertGuideMap } from "./types";
 
-const generatorLangs: Lang[] = ["en", "tr", "de"];
+const generatorLangs: Lang[] = allLangs;
 
 const complicatedSlugs = new Set<string>([
   "go",
@@ -25,7 +26,14 @@ function defaultResources(name: string, lang: Lang) {
   const labels: Record<Lang, { bgg: string; reddit: string }> = {
     en: { bgg: `${name} on BoardGameGeek`, reddit: "Expert discussion on r/boardgames" },
     tr: { bgg: `${name} BoardGameGeek'te`, reddit: "r/boardgames uzman tartismasi" },
-    de: { bgg: `${name} auf BoardGameGeek`, reddit: "Experten-Diskussion auf r/boardgames" }
+    de: { bgg: `${name} auf BoardGameGeek`, reddit: "Experten-Diskussion auf r/boardgames" },
+    es: { bgg: `${name} en BoardGameGeek`, reddit: "Debate experto en r/boardgames" },
+    fr: { bgg: `${name} sur BoardGameGeek`, reddit: "Discussion expert sur r/boardgames" },
+    ja: { bgg: `${name} - BoardGameGeek`, reddit: "r/boardgames 上級者スレ" },
+    pt: { bgg: `${name} no BoardGameGeek`, reddit: "Discussao expert no r/boardgames" },
+    zh: { bgg: `${name} - BoardGameGeek`, reddit: "r/boardgames 专家讨论" },
+    ru: { bgg: `${name} na BoardGameGeek`, reddit: "Ekspertnyj razgovor na r/boardgames" },
+    it: { bgg: `${name} su BoardGameGeek`, reddit: "Discussione expert su r/boardgames" }
   };
   return [
     { label: labels[lang].bgg, url: bggUrl },
@@ -43,7 +51,10 @@ export function buildGuideFromExpert(listing: GameListing, entry: ExpertEntry, r
   const resources = {} as Record<Lang, { label: string; url: string }[]>;
 
   for (const lang of generatorLangs) {
-    const content = entry.content[lang];
+    const content = entry.content[lang] ?? entry.content.en;
+    if (!content) {
+      throw new Error(`Missing expert guide content for ${slug} (${lang})`);
+    }
     metaTitle[lang] = metaTitleTemplates[lang](name);
     metaDescription[lang] = content.metaDescription;
     intro[lang] = content.intro;

@@ -1,6 +1,7 @@
 ---
-import { languages, repoUrl, siteUrl, type Lang, ui } from "../data/site";
+import { languages, ogLocales, repoUrl, siteUrl, slugFromPath, type Lang, ui } from "../data/site";
 import { localizePath } from "../data/games";
+import { allLangs } from "../data/langs";
 
 type Props = {
   lang: Lang;
@@ -16,7 +17,7 @@ const absoluteUrl = new URL(path, siteUrl).toString();
 const imageUrl = new URL(image, siteUrl).toString();
 const labels = ui[lang];
 const pathParts = path.split("/").filter(Boolean);
-const slug = pathParts[0] === "tr" || pathParts[0] === "de" ? pathParts[1] : pathParts[0];
+const slug = slugFromPath(pathParts);
 const switcherPaths = Object.keys(languages).map((code) => ({
   code: code as Lang,
   label: languages[code as Lang],
@@ -38,7 +39,7 @@ const switcherPaths = Object.keys(languages).map((code) => ({
     <link rel="sitemap" href={`${siteUrl}/sitemap.xml`} type="application/xml" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Win Board Games" />
-    <meta property="og:locale" content={lang === "en" ? "en_US" : lang === "tr" ? "tr_TR" : "de_DE"} />
+    <meta property="og:locale" content={ogLocales[lang]} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={absoluteUrl} />
@@ -48,9 +49,11 @@ const switcherPaths = Object.keys(languages).map((code) => ({
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="alternate" hreflang="en" href={new URL(localizePath("en", slug), siteUrl).toString()} />
-    <link rel="alternate" hreflang="tr" href={new URL(localizePath("tr", slug), siteUrl).toString()} />
-    <link rel="alternate" hreflang="de" href={new URL(localizePath("de", slug), siteUrl).toString()} />
+    {
+      allLangs.map((code) => (
+        <link rel="alternate" hreflang={code} href={new URL(localizePath(code, slug), siteUrl).toString()} />
+      ))
+    }
     <link rel="alternate" hreflang="x-default" href={new URL(localizePath("en", slug), siteUrl).toString()} />
     {jsonLd && <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
     <style is:global>

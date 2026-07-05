@@ -2,10 +2,10 @@
 import HomePage from "../../components/HomePage.astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { guides, localizePath } from "../../data/games";
-import { type Lang, repoUrl, siteUrl, ui } from "../../data/site";
+import { nonDefaultLangs, type Lang, repoUrl, siteUrl, ui } from "../../data/site";
 
 export function getStaticPaths() {
-  return [{ params: { lang: "tr" } }, { params: { lang: "de" } }];
+  return nonDefaultLangs.map((lang) => ({ params: { lang } }));
 }
 
 const lang = Astro.params.lang as Lang;

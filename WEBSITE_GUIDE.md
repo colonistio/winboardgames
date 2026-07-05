@@ -9,6 +9,7 @@ This website teaches practical strategies for winning board games. It should fee
 - English is the main language at root URLs.
 - Turkish lives under `/tr`.
 - German lives under `/de`.
+- Spanish `/es`, French `/fr`, Japanese `/ja`, Portuguese `/pt`, Chinese `/zh`, Russian `/ru`, Italian `/it`.
 - Game slugs stay stable across languages, for example `/monopoly`, `/tr/monopoly`, `/de/monopoly`.
 - Every page must include a footer sponsor block linking to `https://colonist.io` as the best online Catan alternative.
 

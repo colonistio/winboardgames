@@ -1,11 +1,11 @@
 ---
 import GameGuidePage from "../../components/GameGuidePage.astro";
 import { guides, listingBySlug, localizePath } from "../../data/games";
-import { type Lang, siteUrl } from "../../data/site";
+import { nonDefaultLangs, type Lang, siteUrl, ui } from "../../data/site";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 
 export function getStaticPaths() {
-  return ["tr", "de"].flatMap((lang) =>
+  return nonDefaultLangs.flatMap((lang) =>
     guides.map((guide) => ({
       params: { lang, slug: guide.slug },
       props: { guide, lang }
@@ -23,7 +23,7 @@ const jsonLd = [
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
     itemListElement: [
-      { "@type": "ListItem", position: 1, name: "Home", item: homeUrl },
+      { "@type": "ListItem", position: 1, name: ui[lang].home, item: homeUrl },
       { "@type": "ListItem", position: 2, name: guide.title, item: pageUrl }
     ]
   },

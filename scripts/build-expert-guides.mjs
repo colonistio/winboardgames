@@ -1,11 +1,37 @@
 #!/usr/bin/env node
 /**
- * Compiles scripts/expert-data/*.mjs into src/data/expert/guides.ts
+ * Compiles expert-data + translations into src/data/expert/guides.ts
  */
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
 import { expertData } from "./expert-data/index.mjs";
+import { esTranslations } from "./expert-data/translations/es.mjs";
+import { frTranslations } from "./expert-data/translations/fr.mjs";
+import { jaTranslations } from "./expert-data/translations/ja.mjs";
+import { ptTranslations } from "./expert-data/translations/pt.mjs";
+import { zhTranslations } from "./expert-data/translations/zh.mjs";
+import { ruTranslations } from "./expert-data/translations/ru.mjs";
+import { itTranslations } from "./expert-data/translations/it.mjs";
+
+const translationMaps = {
+  es: esTranslations,
+  fr: frTranslations,
+  ja: jaTranslations,
+  pt: ptTranslations,
+  zh: zhTranslations,
+  ru: ruTranslations,
+  it: itTranslations
+};
+
+for (const [slug, entry] of Object.entries(expertData)) {
+  for (const [lang, map] of Object.entries(translationMaps)) {
+    const translated = map[slug];
+    if (translated) {
+      entry.content[lang] = translated;
+    }
+  }
+}
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const outPath = path.join(__dirname, "../src/data/expert/guides.ts");
